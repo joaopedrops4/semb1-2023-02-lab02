@@ -118,11 +118,12 @@ int main(int argc, char *argv[])
   uint32_t *pGPIOC_OTYPER = (uint32_t *)STM32_GPIOC_OTYPER;
   uint32_t *pGPIOC_PUPDR  = (uint32_t *)STM32_GPIOC_PUPDR;
   uint32_t *pGPIOC_BSRR   = (uint32_t *)STM32_GPIOC_BSRR;
+  uint32_t *pGPIOA_IDR    = (uint32_t *)STM32_GPIOA_IDR;  // Novo ponteiro para o IDR do GPIOA
 
-  /* Habilita clock GPIOC */
+  /* Habilita clock GPIOC e GPIOA */
 
   reg  = *pRCC_AHB1ENR;
-  reg |= RCC_AHB1ENR_GPIOCEN;
+  reg |= RCC_AHB1ENR_GPIOCEN | RCC_AHB1ENR_GPIOAEN;  // Habilita também o clock do GPIOA
   *pRCC_AHB1ENR = reg;
 
   /* Configura PC13 como saida pull-up off e pull-down off */
@@ -144,14 +145,15 @@ int main(int argc, char *argv[])
 
   while(1)
     {
-      /* Liga LED */
+      /* Verifica o estado do botão */
+      if (*pGPIOA_IDR & GPIO_IDR_IDR_0) {
+        /* Botão pressionado, liga o LED */
+        *pGPIOC_BSRR = GPIO_BSRR_RESET(13);
+      } else {
+        /* Botão não pressionado, desliga o LED */
+        *pGPIOC_BSRR = GPIO_BSRR_SET(13);
+      }
 
-      *pGPIOC_BSRR = GPIO_BSRR_RESET(13);
-      for (i = 0; i < LED_DELAY; i++);
-
-      /* Desliga LED */
-
-      *pGPIOC_BSRR = GPIO_BSRR_SET(13);
       for (i = 0; i < LED_DELAY; i++);
     }
 
