@@ -25,6 +25,10 @@
 
 #define STM32_GPIOC_BASE     0x40020800     /* 0x48000800-0x48000bff: GPIO Port C */
 
+/* GPIOA Base Addresses ******************************************************/
+
+#define STM32_GPIOA_BASE     0x40020000     /* 0x40020000-0x400203ff: GPIO Port A */
+
 /* Register Offsets *********************************************************/
 
 #define STM32_RCC_AHB1ENR_OFFSET  0x0030   /* AHB1 Peripheral Clock enable register */
@@ -34,6 +38,8 @@
 #define STM32_GPIO_PUPDR_OFFSET   0x000c  /* GPIO port pull-up/pull-down register */
 #define STM32_GPIO_ODR_OFFSET     0x0014  /* GPIO port output data register */
 #define STM32_GPIO_BSRR_OFFSET    0x0018  /* GPIO port bit set/reset register */
+
+#define STM32_GPIO_IDR_OFFSET     0x0010  /* GPIO port input data register */
 
 
 /* Register Addresses *******************************************************/
@@ -45,6 +51,9 @@
 #define STM32_GPIOC_PUPDR        (STM32_GPIOC_BASE+STM32_GPIO_PUPDR_OFFSET)
 #define STM32_GPIOC_ODR          (STM32_GPIOC_BASE+STM32_GPIO_ODR_OFFSET)
 #define STM32_GPIOC_BSRR         (STM32_GPIOC_BASE+STM32_GPIO_BSRR_OFFSET)
+
+#define STM32_GPIOA_IDR          (STM32_GPIOA_BASE+STM32_GPIO_IDR_OFFSET)
+
 
 /* AHB1 Peripheral Clock enable register */
 
